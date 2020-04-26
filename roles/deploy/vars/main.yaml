@@ -1,0 +1,13 @@
+devops_directory: /srv/devops
+bot_directory: /srv/utg-bot
+conf:
+    directory: "/home/arma"
+    server_dir: "server"
+    scripts_dir: "utg"
+    steamcmd: "steamcmd"
+    steam_user: "{{ steam_user_secret }}"
+    steam_pass: "{{ steam_pass_secret }}"
+    uid: 1002
+    gid: 1002
+    discord_token: "{{ discord_token_secret }}"
+    discord_channel: "565936316999794689"

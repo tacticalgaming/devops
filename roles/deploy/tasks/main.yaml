@@ -1,0 +1,41 @@
+---
+
+- name: Download this repository to remote host
+  git:
+    repo: 'https://github.com/tacticalgaming/devops.git'
+    dest: '{{ devops_directory }}'
+
+- name: Deploy Discord Bot
+  git:
+    repo: 'https://github.com/tacticalgaming/utg-bot.git'
+    dest: '{{ bot_directory }}'
+
+- name: Build Discord Bot
+  make:
+    chdir: '{{ bot_directory }}'
+    target: build
+
+- name: Install Discord Bot
+  make:
+    chdir: '{{ bot_directory }}'
+    target: install
+
+- name: Setup UTG Bot Configuration file
+  template:
+    src: utg-bot.yaml.j2
+    dest: /etc/utg-bot.yaml
+
+- name: Setup UTG Bot Service file
+  template:
+    src: utg-bot.service.j2
+    dest: /etc/systemd/system/utg-bot.service
+
+- name: Enable and Restart UTG Bot
+  systemd:
+    name: utg-bot
+    daemon-reload: yes
+    state: restarted
+    enable: yes
+    masked: no
+  
+
